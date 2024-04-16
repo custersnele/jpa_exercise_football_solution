@@ -1,6 +1,6 @@
 package be.pxl.api.dto;
 
-import be.pxl.Position;
+import be.pxl.domain.Position;
 
 public class FilterDto {
 	private String email;

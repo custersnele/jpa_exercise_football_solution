@@ -5,6 +5,7 @@ import be.pxl.api.dto.TeamDto;
 import be.pxl.domain.FootballTeam;
 import be.pxl.service.FootballTeamService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,7 +53,8 @@ public class FootballTeamController {
 
 	// Upload the players for a team
 	@PostMapping("/{teamId}/players")
-	public void uploadPlayers(@PathVariable Long teamId, @RequestParam("file") MultipartFile file) {
-		return footballTeamService.uploadPlayers(teamId, file);
+	public ResponseEntity<String> uploadPlayers(@PathVariable Long teamId, @RequestParam("file") MultipartFile file) {
+		footballTeamService.uploadPlayers(teamId, file);
+		return ResponseEntity.ok("File is being processed.");
 	}
 }

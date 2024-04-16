@@ -1,6 +1,7 @@
 package be.pxl.repository;
 
-import be.pxl.demo.domain.football.FootballPlayer;
+import be.pxl.builder.FootballPlayerBuilder;
+import be.pxl.domain.FootballPlayer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,14 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 public class FootballPlayerRepositoryTest {
-
-	private static final String SUPERHERO_NAME = "Superman";
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -44,9 +44,17 @@ public class FootballPlayerRepositoryTest {
 	}
 
 	@Test
-	public void returnsFootballPlayersWithEmailPattern() {
-		List<FootballPlayer> footballPlayers = footballPlayerRepository.findFootballPlayerByEmailContainingIgnoreCase("test1");
+	public void returnsFootballPlayersWithEmail() {
+		Optional<FootballPlayer> footballPlayer = footballPlayerRepository.findFootballPlayerByEmail("test2@krc-genk.be");
 
-		assertEquals(1, footballPlayers.size());
+		assertTrue(footballPlayer.isPresent());
+		assertEquals("test2@krc-genk.be", footballPlayer.get().getEmail());
+	}
+
+	@Test
+	public void returnsEmptyOptionalWhenNoFootballPlayerWithEmail() {
+		Optional<FootballPlayer> footballPlayer = footballPlayerRepository.findFootballPlayerByEmail("test3@krc-genk.be");
+
+		assertTrue(footballPlayer.isEmpty());
 	}
 }
