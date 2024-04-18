@@ -12,6 +12,7 @@ docker compose up
 ## 2. API documentation
 
 Implement the following REST endpoints for creating and retrieving football teams.
+Create an entity class for football team.
 
 ### a. Create a football team
 
@@ -181,6 +182,38 @@ Create an endpoint to search for football players.
 		"city": "Paris"
 	}
     ]
-    
-    
+
+### e. Retrieve a team with all football players
+
+Create a bi-directional lazy fetched relationship between team
+and player.
+
+#### Request
+
+`GET api/teams/{teamId}`
+
+
+#### Responses
+
+    200 OK 
+        {
+        "name": "PSG",
+        "coach": "Somebody",
+        "city": "Paris",
+        "players": [
+        {
+        "name": "James Wilson",
+        "shirtNumber": 5
+        },
+        {
+        "name": "William Johnson",
+        "shirtNumber": 13
+        },
+        {
+        "name": "Richard Williams",
+        "shirtNumber": 12
+        },
+        ...
+        ]
+        }
 
