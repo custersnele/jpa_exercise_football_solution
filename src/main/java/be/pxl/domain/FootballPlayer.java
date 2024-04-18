@@ -73,6 +73,7 @@ public class FootballPlayer {
 
 	public void setTeam(FootballTeam team) {
 		this.team = team;
+		team.addFootballPlayer(this);
 	}
 
 	@Override

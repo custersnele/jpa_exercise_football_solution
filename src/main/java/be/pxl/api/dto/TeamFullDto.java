@@ -3,6 +3,7 @@ package be.pxl.api.dto;
 import be.pxl.domain.FootballTeam;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class TeamFullDto extends TeamDto {
 	private List<FootballPlayerBasicDto> players;
@@ -16,7 +17,12 @@ public class TeamFullDto extends TeamDto {
 	}
 
 	public static TeamFullDto from(FootballTeam footballTeam) {
-
-
+		TeamFullDto result = new TeamFullDto();
+		result.setName(footballTeam.getName());
+		result.setCity(footballTeam.getCity());
+		result.setCoach(footballTeam.getCoach());
+		List<FootballPlayerBasicDto> players = footballTeam.getFootballPlayers().stream().map(FootballPlayerBasicDto::from).toList();
+		result.setPlayers(players);
+		return result;
 	}
 }

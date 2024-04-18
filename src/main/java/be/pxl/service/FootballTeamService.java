@@ -2,6 +2,7 @@ package be.pxl.service;
 
 import be.pxl.api.dto.CreateTeamDto;
 import be.pxl.api.dto.TeamDto;
+import be.pxl.api.dto.TeamFullDto;
 import be.pxl.domain.FootballTeam;
 import be.pxl.exception.ResourceNotFoundException;
 import be.pxl.repository.FootballTeamRepository;
@@ -55,5 +56,10 @@ public class FootballTeamService {
 		FootballTeam footballTeam = footballTeamRepository.findById(teamId).orElseThrow(() -> new ResourceNotFoundException("No team with id [" + teamId + "]"));
 		uploadService.createTeam(footballTeam, file);
 
+	}
+
+	public TeamFullDto getTeamById(Long teamId) {
+		FootballTeam footballTeam = footballTeamRepository.findById(teamId).orElseThrow(() -> new ResourceNotFoundException("No team with id"));
+		return TeamFullDto.from(footballTeam);
 	}
 }

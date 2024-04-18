@@ -2,6 +2,7 @@ package be.pxl.api;
 
 import be.pxl.api.dto.CreateTeamDto;
 import be.pxl.api.dto.TeamDto;
+import be.pxl.api.dto.TeamFullDto;
 import be.pxl.domain.FootballTeam;
 import be.pxl.service.FootballTeamService;
 import jakarta.validation.Valid;
@@ -33,6 +34,10 @@ public class FootballTeamController {
 		return footballTeamService.createTeam(team);
 	}
 
+	@GetMapping("/{teamId}")
+	public TeamFullDto getTeam(@PathVariable Long teamId) {
+		return footballTeamService.getTeamById(teamId);
+	}
 	// Update a team's coach
 	@PutMapping("/{teamId}/coach")
 	public FootballTeam updateCoach(@PathVariable Long teamId, @RequestParam String newCoach) {

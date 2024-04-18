@@ -4,7 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "teams")
@@ -15,6 +19,8 @@ public class FootballTeam {
 	private String name;
 	private String coach;
 	private String city;
+	@OneToMany(mappedBy = "team")
+	private List<FootballPlayer> footballPlayers = new ArrayList<>();
 
 
 	public Long getId() {
@@ -43,5 +49,13 @@ public class FootballTeam {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public List<FootballPlayer> getFootballPlayers() {
+		return footballPlayers;
+	}
+
+	public void addFootballPlayer(FootballPlayer footballPlayer) {
+		this.footballPlayers.add(footballPlayer);
 	}
 }
