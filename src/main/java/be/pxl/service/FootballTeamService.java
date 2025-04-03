@@ -4,6 +4,7 @@ import be.pxl.api.dto.CreateTeamDto;
 import be.pxl.api.dto.TeamDto;
 import be.pxl.api.dto.TeamFullDto;
 import be.pxl.domain.FootballTeam;
+import be.pxl.exception.FootballException;
 import be.pxl.exception.ResourceNotFoundException;
 import be.pxl.repository.FootballTeamRepository;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,25 @@ public class FootballTeamService {
 	}
 
 	@Transactional
-	public FootballTeam createTeam(CreateTeamDto team) {
+	public TeamDto createTeam(CreateTeamDto team) {
 		// There can be maximum two teams in one city.
-		// Stadium and name must be unique.
+		// Coach and name must be unique.
+		if (footballTeamRepository.countFootballTeamByCity(team.getCity()) >= 2) {
+			throw new FootballException("Too many teams in city [" + team.getCity() + "]");
+		}
+		if (footballTeamRepository.countFootballTeamByName(team.getName()) >= 1) {
+			throw new FootballException("Name [" + team.getName() + "] already taken.");
+		}
+		if (footballTeamRepository.countFootballTeamByCoach(team.getCoach()) >= 1) {
+			throw new FootballException("Coach [" + team.getCoach() + "] already assigned.");
+		}
 		FootballTeam footballTeam = new FootballTeam();
 		footballTeam.setName(team.getName());
 		footballTeam.setCity(team.getCity());
 		footballTeam.setCoach(team.getCoach());
-		return footballTeamRepository.save(footballTeam);
+		FootballTeam savedTeam = footballTeamRepository.save(footballTeam);
+
+		return TeamDto.from(savedTeam);
 	}
 
 	@Transactional
@@ -49,9 +61,11 @@ public class FootballTeamService {
 		return footballTeamRepository.findByCityJpql(city).stream().map(TeamDto::from).toList();
 	}
 
+	// TODO will transaction that starts here, be propagated to the
+	// async method?
 	public void uploadPlayers(Long teamId, MultipartFile file) {
-		FootballTeam footballTeam = footballTeamRepository.findById(teamId).orElseThrow(() -> new ResourceNotFoundException("No team with id [" + teamId + "]"));
-		uploadService.createTeam(footballTeam, file);
+		//FootballTeam footballTeam = footballTeamRepository.findById(teamId).orElseThrow(() -> new ResourceNotFoundException("No team with id [" + teamId + "]"));
+		uploadService.createTeam(teamId, file);
 
 	}
 

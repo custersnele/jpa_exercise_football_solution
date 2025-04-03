@@ -1,8 +1,13 @@
 package be.pxl.api.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class CreateTeamDto {
+	@NotBlank(message = "Name cannot be blank.")
 	private String name;
+	@NotBlank(message = "Field city is required.")
 	private String city;
+	@NotBlank
 	private String coach;
 
 	public String getName() {

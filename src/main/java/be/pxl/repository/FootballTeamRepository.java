@@ -16,4 +16,10 @@ public interface FootballTeamRepository extends JpaRepository<FootballTeam, Long
 	List<FootballTeam> findByCityNative(@Param("city") String city);
 
 	List<FootballTeam> findFootballTeamByCity(String city);
+
+	int countFootballTeamByCity(String city);
+
+	int countFootballTeamByCoach(String coach);
+
+	int countFootballTeamByName(String name);
 }

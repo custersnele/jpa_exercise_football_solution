@@ -1,11 +1,6 @@
 package be.pxl.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +11,13 @@ public class FootballTeam {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(unique = true)
 	private String name;
+	@Column(unique = true)
 	private String coach;
 	private String city;
 	@OneToMany(mappedBy = "team")
 	private List<FootballPlayer> footballPlayers = new ArrayList<>();
-
 
 	public Long getId() {
 		return id;

@@ -3,7 +3,9 @@ package be.pxl.service;
 import be.pxl.domain.FootballPlayer;
 import be.pxl.domain.FootballTeam;
 import be.pxl.domain.Position;
+import be.pxl.exception.ResourceNotFoundException;
 import be.pxl.repository.FootballPlayerRepository;
+import be.pxl.repository.FootballTeamRepository;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -22,14 +24,19 @@ import java.io.InputStreamReader;
 public class UploadService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UploadService.class);
 	private final FootballPlayerRepository footballPlayerRepository;
+	private final FootballTeamRepository footballTeamRepository;
 
-	public UploadService(FootballPlayerRepository footballPlayerRepository) {
+	public UploadService(FootballPlayerRepository footballPlayerRepository,
+						 FootballTeamRepository footballTeamRepository) {
 		this.footballPlayerRepository = footballPlayerRepository;
+		this.footballTeamRepository = footballTeamRepository;
 	}
 
 	@Async
 	@Transactional
-	public void createTeam(FootballTeam footballTeam, MultipartFile file) {
+	public void createTeam(Long footballTeamId, MultipartFile file) {
+		FootballTeam footballTeam = footballTeamRepository.findById(footballTeamId)
+				.orElseThrow(() -> new ResourceNotFoundException("No team with id " + footballTeamId));
 		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
 			String[] HEADERS = { "Name", "Email", "Position", "ShirtNumber" };
 			CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
