@@ -1,7 +1,7 @@
 version: "3.3"
 
 services:
-  research-db:
+  football-db:
     image: mysql:latest
     ports:
       - "3310:3306"
