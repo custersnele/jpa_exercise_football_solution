@@ -52,10 +52,10 @@ public class FootballPlayerService {
 					allPredicates.add(builder.equal(root.get("email"), filter.getEmail()));
 				}
 				if (filter.getTeam() != null) {
-					allPredicates.add(builder.equal(root.join("team").get("name"), filter.getName()));
+					allPredicates.add(builder.equal(root.join("team").get("name"), filter.getTeam()));
 				}
 				if (filter.getCity() != null) {
-					allPredicates.add(builder.equal(root.join("team").get("city"), filter.getName()));
+					allPredicates.add(builder.equal(root.join("team").get("city"), filter.getCity()));
 				}
 				return builder.and(allPredicates.toArray(new Predicate[0]));
 			}
