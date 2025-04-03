@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -18,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataJpaTest
 public class FootballPlayerRepositoryTest {
 
-	@PersistenceContext
-	protected EntityManager entityManager;
+	@Autowired
+	private TestEntityManager testEntityManager;
 
 	@Autowired
 	private FootballPlayerRepository footballPlayerRepository;
@@ -39,8 +40,8 @@ public class FootballPlayerRepositoryTest {
 	@BeforeEach
 	public void init() {
 		footballPlayerRepository.saveAll(Arrays.asList(footballPlayer1, footballPlayer2));
-		entityManager.flush();
-		entityManager.clear();
+		testEntityManager.flush();
+		testEntityManager.clear();
 	}
 
 	@Test

@@ -45,7 +45,9 @@ public final class FootballPlayerBuilder {
         footballPlayer.setEmail(email);
         footballPlayer.setShirtNumber(shirtNumber);
         footballPlayer.setPosition(position);
-        footballPlayer.setTeam(team);
+        if (team != null) {
+            footballPlayer.setTeam(team);
+        }
         return footballPlayer;
     }
 

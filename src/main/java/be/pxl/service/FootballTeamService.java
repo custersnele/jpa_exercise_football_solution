@@ -39,9 +39,11 @@ public class FootballTeamService {
 		return footballTeamRepository.save(footballTeam);
 	}
 
+	@Transactional
 	public FootballTeam updateCoach(Long teamId, String newCoach) {
-		// TODO
-		return null;
+		FootballTeam footballTeam = footballTeamRepository.findById(teamId).orElseThrow(() -> new ResourceNotFoundException("No team with id [" + teamId + "]"));
+		footballTeam.setCoach(newCoach);
+		return footballTeam;
 	}
 
 	public List<TeamDto> findAllTeams() {

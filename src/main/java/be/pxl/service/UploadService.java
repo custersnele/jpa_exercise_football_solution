@@ -39,12 +39,12 @@ public class UploadService {
 					.build();
 
 			CSVParser records = csvFormat.parse(bufferedReader);
-			for (CSVRecord record : records) {
+			for (CSVRecord csvRecord : records) {
 				FootballPlayer footballPlayer = new FootballPlayer();
-				footballPlayer.setName(record.get(0));
-				footballPlayer.setEmail(record.get(1));
-				footballPlayer.setPosition(Position.valueOf(record.get(2).toUpperCase()));
-				footballPlayer.setShirtNumber(Integer.parseInt(record.get(3)));
+				footballPlayer.setName(csvRecord.get(0));
+				footballPlayer.setEmail(csvRecord.get(1));
+				footballPlayer.setPosition(Position.valueOf(csvRecord.get(2).toUpperCase()));
+				footballPlayer.setShirtNumber(Integer.parseInt(csvRecord.get(3)));
 				footballPlayer.setTeam(footballTeam);
 				footballPlayerRepository.save(footballPlayer);
 			}
