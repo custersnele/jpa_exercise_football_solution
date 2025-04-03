@@ -3,7 +3,6 @@ package be.pxl.api.dto;
 import be.pxl.domain.FootballTeam;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public class TeamFullDto extends TeamDto {
 	private List<FootballPlayerBasicDto> players;

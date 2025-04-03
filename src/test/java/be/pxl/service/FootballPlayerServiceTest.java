@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @Import(FootballPlayerService.class)
-public class FootballPlayerServiceTest {
+class FootballPlayerServiceTest {
 
 	@Autowired
 	private FootballPlayerRepository footballPlayerRepository;

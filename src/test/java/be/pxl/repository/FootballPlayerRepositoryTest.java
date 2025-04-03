@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
-public class FootballPlayerRepositoryTest {
+class FootballPlayerRepositoryTest {
 
 	@Autowired
 	private TestEntityManager testEntityManager;
@@ -38,14 +38,14 @@ public class FootballPlayerRepositoryTest {
 			.build();
 
 	@BeforeEach
-	public void init() {
+	void init() {
 		footballPlayerRepository.saveAll(Arrays.asList(footballPlayer1, footballPlayer2));
 		testEntityManager.flush();
 		testEntityManager.clear();
 	}
 
 	@Test
-	public void returnsFootballPlayersWithEmail() {
+	void returnsFootballPlayersWithEmail() {
 		Optional<FootballPlayer> footballPlayer = footballPlayerRepository.findFootballPlayerByEmail("test2@krc-genk.be");
 
 		assertTrue(footballPlayer.isPresent());
@@ -53,7 +53,7 @@ public class FootballPlayerRepositoryTest {
 	}
 
 	@Test
-	public void returnsEmptyOptionalWhenNoFootballPlayerWithEmail() {
+	void returnsEmptyOptionalWhenNoFootballPlayerWithEmail() {
 		Optional<FootballPlayer> footballPlayer = footballPlayerRepository.findFootballPlayerByEmail("test3@krc-genk.be");
 
 		assertTrue(footballPlayer.isEmpty());
