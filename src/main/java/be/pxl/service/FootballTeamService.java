@@ -69,6 +69,7 @@ public class FootballTeamService {
 
 	}
 
+	@Transactional(readOnly = true)
 	public TeamFullDto getTeamById(Long teamId) {
 		FootballTeam footballTeam = footballTeamRepository.findById(teamId).orElseThrow(() -> new ResourceNotFoundException("No team with id"));
 		return TeamFullDto.from(footballTeam);
